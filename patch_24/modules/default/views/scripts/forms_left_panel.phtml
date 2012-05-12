@@ -1,0 +1,175 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: forms_left_panel.phttml	#
+#			Description 	: this is menu to work in the front end site #
+#			Created date	: 16/02/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+$string=$_SERVER['REQUEST_URI'];
+$find='overview';
+$find2='stdfield';
+$find3='customfield';
+$find4='opthrs';
+$find5='businessrule';
+$find6='emailnotification';
+$find7='formredirect';
+$find8='reporting';
+$find9='preview';
+$find10='formhtml';
+$find11='wufooformfield';
+$pos=strpos($string,$find);
+$pos2=strpos($string,$find2);
+$pos3=strpos($string,$find3);
+$pos4=strpos($string,$find4);
+$pos5=strpos($string,$find5);
+$pos6=strpos($string,$find6);
+$pos7=strpos($string,$find7);
+$pos8=strpos($string,$find8);
+$pos9=strpos($string,$find9);
+$pos10=strpos($string,$find10);
+
+$pos11=strpos($string,$find11);
+
+$session = new Zend_Session_Namespace('Zend_Auth');
+
+?>
+<!--forms section left menu start here-->
+<div class="maxheight col-1" style="width:220px;" >
+        <div class="maxheight box">
+            <div class="forms-padding">            		
+
+                <h2 class="entry-title">
+                	<?php if($session->user_type == 1) 
+                	{
+                		$member = new members();
+						$data = $member->fetchRow($member->select()->where("id=".$session->member_id));
+						$customer_name = ucfirst($data['firstname'])." ".ucfirst($data['lastname']);
+                	?>
+                		
+                		<cufon class="cufon cufon-canvas" alt="<?php echo $customer_name ;?> " style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext><?php echo $customer_name ;?> </cufontext></cufon>
+                		
+                	<?php } else {?>
+                		<cufon class="cufon cufon-canvas" alt="Create New Form " style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Create New Form </cufontext></cufon>
+                	<?php }?>	
+                </h2>
+               <?php if($session->user_type == 1) 
+                	{ ?>
+                	<a href="<?=WEBSITE_URL?>admin/customers/"><b>Back to Customers</b></a><br/><br/>
+                <?php }?>
+                <div class="account">
+                    <ul style="width: 180px;margin-left: 0px">
+                        <li class="title1"><strong>Setup</strong></li>
+                        
+                        <li class="<?php if($pos===false){ echo ""; } else {?> active<? }?>">
+	                       <?php  
+	                       	if($pos===false)
+	                       	{
+	                       ?>
+	                       	 <a href="<?php echo WEBSITE_URL?>forms/overview/form_id/<?php echo $this->form_id?>">Overview</a>
+	                       	 <?php 
+	                       	}
+	                       	else
+	                       	{
+	                       	 	?>
+	                       	 		<strong >Overview</strong>
+	                       	 <?php } ?>
+                        
+                        </li>
+                        
+                        <?php if($this->form_type == "wufoo") {?>
+                        	<li class="<?php if($pos11===false){ echo ""; } else {?> active<? }?>">
+	                        	<?php if($pos11===false) {?>
+	                        		<a href="<?php echo WEBSITE_URL?>forms/wufooformfield/form_id/<?php echo $this->form_id?>">Wufoo Form Fields</a>
+	                        	<?php }
+	                        		else
+	                        		{
+	                        	?>	
+	                        		<strong >Wufoo Form Fields</strong>
+	                        	<?php }?>
+                         </li>
+                        <?php }
+                        	else
+                        	{
+                        ?>
+	                        <li class="<?php if($pos2===false){ echo ""; } else {?> active<? }?>" style="width: 180px">
+		                        <?php if($pos2===false) {?>
+		                        <a href="<?php echo WEBSITE_URL?>forms/stdfield/form_id/<?php echo $this->form_id?>">Standard Form Fields</a>
+		                        		
+		                        <?php } else {?>
+		                        	<strong >Standard Form Fields</strong>
+		                        <?php }?>
+	                        </li>
+	                        
+	                        <li class="<?php if($pos3===false){ echo ""; } else {?> active<? }?>">
+		                        <?php if($pos3===false) { ?>
+		                        	<a href="<?php echo WEBSITE_URL?>forms/customfield/form_id/<?php echo $this->form_id?>">Custom Form Fields</a>
+		                        <?php } else {?>
+		                        		<strong >Custom Form Fields</strong>
+		                        <?php }?>
+	                        </li>
+	                        
+                        <?php }?>
+                        <li class="<?php if($pos4===false){ echo ""; } else {?> active<? }?>">
+                        	<?php if($pos4===false) { ?>
+                        		<a href="<?php echo WEBSITE_URL?>forms/opthrs/form_id/<?php echo $this->form_id?>">Hours of Operation</a>
+                        	<?php } else {?>
+                        		<strong >Hours of Operation</strong>
+                        	<?php }?>
+                        </li>
+                        <li class="<?php if($pos5===false){ echo ""; } else {?> active<? }?>">
+                        	<?php if($pos5===false) {?>
+                        		<a href="<?php echo WEBSITE_URL?>forms/businessrule/form_id/<?php echo $this->form_id?>">Business Rules</a>
+                        	<?php } else {?>
+                        		<strong >Business Rules</strong>
+                        	<?php }?>	
+                        </li>
+                        <li class="<?php if($pos6===false){ echo ""; } else {?> active<? }?>">
+                        <?php if($pos6===false) { ?>
+                        	<a href="<?php echo WEBSITE_URL?>forms/emailnotification/form_id/<?php echo $this->form_id?>">Email Notification</a>
+                        <?php } else {?>
+                        	<strong >Email Notification</strong>
+                        <?php }?>	
+                        </li>
+                        <?php if($this->form_type != "wufoo")
+                        {?>
+                        	<li class="<?php if($pos7===false){ echo ""; } else {?> active<? }?>">
+                        		<?php if($pos7===false) {?>
+                        			<a href="<?php echo WEBSITE_URL?>forms/formredirect/form_id/<?php echo $this->form_id?>">Form Response</a>
+                        		<?php } else {?>
+                        			<strong >Form Response</strong>
+                        		<?php }?>	
+                        	</li>
+                        <?php 
+                        }?>	
+                       
+                    </ul>
+                </div>
+				<br>
+                <div class="account">
+                <?php 
+                if($this->form_type == "web") {?>
+                    <ul style="width: 180px;margin-left: 0px;">
+						 <li class="billing"><strong>Form</strong></li>
+                         <li <?php if($pos9===false){ echo ""; } else {?> class="active"<? }?>>
+                         	<?php if($pos9===false) {?>
+                         		<a <?php if ($session->overview_done && $session->standard_form_done && $session->emailnotification_done && $session->redirect_done): ?> href="<?php echo WEBSITE_URL?>forms/preview/form_id/<?php echo $this->form_id?>" <?php else: ?> class="grayout"  <?php endif; ?> >Preview</a>
+                         	<?php } else {?>
+                         		<strong <?php if ($session->overview_done && $session->standard_form_done && $session->emailnotification_done && $session->redirect_done): ?>  <?php else: ?> class="grayout"  <?php endif; ?> >Preview</strong>
+                         	<?php }?>	
+                         </li>
+						 <li <?php if($pos10===false){ echo ""; } else {?> class="active"<? }?>>
+						 	<?php if($pos10===false) {?>
+						 		<a <?php if ($session->overview_done && $session->standard_form_done && $session->emailnotification_done && $session->redirect_done): ?>  href="<?php echo WEBSITE_URL?>forms/formhtml/form_id/<?php echo $this->form_id?>" <?php else: ?> class="grayout"  <?php endif; ?>>Generate HTML</a>
+						 	<?php } else {?>
+						 		<strong <?php if ($session->overview_done && $session->standard_form_done && $session->emailnotification_done && $session->redirect_done): ?>  <?php else: ?> class="grayout"  <?php endif; ?> >Generate HTML</strong>
+						 	<?php }?>
+						 </li>
+					</ul>
+				<?php }?>	
+                </div>
+            </div>
+        </div>
+</div>
+<!--==============================content================================-->
+
