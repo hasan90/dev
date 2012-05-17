@@ -16,13 +16,11 @@
 require_once 'BaseController.php';
 //require_once('Zend/Session.php');
 
-
 class AdminController extends BaseController
 {
 
    public function init()
     {
-    	date_default_timezone_set('America/Los_Angeles');
     	$auth=Zend_Auth::getInstance();	
     	$session = new Zend_Session_Namespace('Zend_Auth'); 
 		//$this->view->actionName = 'index';	
@@ -58,18 +56,8 @@ class AdminController extends BaseController
     {
 			$member = new members();
 			$orders = new orders();
-			$session = new Zend_Session_Namespace('Zend_Auth');
-			
-			if($session->admin_id > 0 && !empty($session->admin_id))
-			{
-				$session->member_id = $session->admin_id;
-			}
-			
 			$session_customer_sorting = new Zend_Session_Namespace('Zend_Auth'); 
 		
-			$subscription = new subscriptions();
-			$result = $subscription->fetchAll($subscription->select()->where("1=1"));
-			$this->view->subscription = $result;
 			$select = $member->select()->setIntegrityCheck(false);			
 			$name = $this->getRequest()->getParam('name');
 			$orderby = $this->getRequest()->getParam('sort');
@@ -180,10 +168,10 @@ class AdminController extends BaseController
 				if(!empty($username))
 				{
 				
-					$condition = $select->from($member,array('customers.*'))
-					->joinInner('subscriptions','customers.plan_id=subscriptions.id',array('price'))
+					$condition = $select->from($member,array('members.*'))
+					->joinInner('subscriptions','members.plan_id=subscriptions.id',array('price'))
 					->order($order_by)
-					->where("customers.username like '$username%'");					
+					->where("members.username like '$username%'");					
 					$_GET['search'] = $username;
 					$this->view->username = $username;	
 					
@@ -205,85 +193,17 @@ class AdminController extends BaseController
 			
 			if(empty($condition) && $field_status!='')// if no conditiona has been set due to search
 			{
-				$condition = $select->from($member, array('customers.*'))				
-				 ->joinInner('subscriptions','customers.plan_id=subscriptions.id and customers.user_type=0',array('price'))
-				 ->where("customers.status='$field_status'")
+				$condition = $select->from($member, array('members.*'))				
+				 ->joinInner('subscriptions','members.plan_id=subscriptions.id and members.user_type=0',array('price'))
+				 ->where("members.status='$field_status'")
 				->order($order_by);						
 			}else if(empty($condition))// if no conditiona has been set due to search
 			{
-				$condition = $select->from($member, array('customers.*'))				
-				 ->joinInner('subscriptions','customers.plan_id=subscriptions.id and customers.user_type=0',array('price'))				
+				$condition = $select->from($member, array('members.*'))				
+				 ->joinInner('subscriptions','members.plan_id=subscriptions.id and members.user_type=0',array('price'))				
 				->order($order_by);						
 			}
-
-			$this->view->selectedplan = 0;
-			//$this->view->search_by_email = "";
-			$cond ='';
-			
-			
-			
-			
-		/***********************************Start searching by Phone************************************************************/
-				
-			if(trim($this->getRequest()->getParam('searchByPhone')) != "")
-			{
-			
-				$this->view->search_by_phone = trim($this->getRequest()->getParam('searchByPhone'));
-				$phone = $this->getRequest()->getParam('searchByPhone');
-				$condition = "";
-				$cond = " and customers.phone='$phone'";
-				
-				
-				$condition = $select->from($member, array('customers.*'))				
-					 ->joinInner('subscriptions','customers.user_type=0'.$cond,array('price'))				
-					->order($order_by)->group('customers.plan_id');
-					
-			}
-			
-		/***********************************End searching by Phone************************************************************/		
-			
-		/***********************************Start searching by Email************************************************************/
-				
-			if(trim($this->getRequest()->getParam('searchByEmail')) != "")
-			{
-			
-				$this->view->search_by_email = $this->getRequest()->getParam('searchByEmail');
-				$email = $this->getRequest()->getParam('searchByEmail');
-				$condition = "";
-				$cond = " and customers.email='$email'";
-				
-				
-				$condition = $select->from($member, array('customers.*'))				
-					 ->joinInner('subscriptions','customers.user_type=0'.$cond,array('price'))				
-					->order($order_by)->group('customers.plan_id');
-					
-			}
-			
-		/***********************************End searching by Email************************************************************/	
-			
-			
-		/***********************************Start searching by Plan ************************************************************/	
-			if($this->getRequest()->getParam('searchBy') == 'plan')
-			{
-				$field_name=$this->getRequest()->getParam('name');
-				$plan_id=$this->getRequest()->getParam('id');
-				$condition = "";
-				
-				
-				if($plan_id > 0)
-					$cond =' and customers.plan_id='.$plan_id;	
-				
-					$condition = $select->from($member, array('customers.*'))				
-					 ->joinInner('subscriptions','customers.user_type=0'.$cond,array('price'))				
-					->order($order_by)->group('customers.plan_id');
-				
-				
-				$this->view->selectedplan = $plan_id;
-				
-				
-			}
-			
-		/***********************************End searching by Plan ************************************************************/		
+						
 			$result_member = $member->fetchAll($condition);			
 			$this->view->total_customer =count($result_member);
 			
@@ -324,8 +244,8 @@ class AdminController extends BaseController
 			
 			
 			$conditions = $select->from($orders,array('orders.*'))
-			->joinInner('customers','customers.id=orders.member_id')
-			->where("customers.status='Active'");			 			
+			->joinInner('members','members.id=orders.member_id')
+			->where("members.status='Active'");			 			
 			return;    
 	
 	}
@@ -604,16 +524,13 @@ class AdminController extends BaseController
 					if($allforms=='4'){$inquiry_type_value='Hang up';}				
 					if($inquiry_type_value==''){$inquiry_type_value='Completed';}	
 								
-					if($form_id>0)
-					{
-						$condition = $select->from($inquiries,array('inquiry.*'))					
-						->where("customer_id ='".$customer_id."' and inquiry_type='".$inquiry_type_value."' and form_id=".$form_id)
-						->order($order_by);	 
-					}else
-					{
-						$condition = $select->from($inquiries,array('inquiry.*'))					
-						->where("customer_id ='".$customer_id."' and inquiry_type='".$inquiry_type_value."'")
-						->order($order_by);
+					if($form_id>0){
+					$condition = $select->from($inquiries,array('inquiry.*'))					
+					->where("customer_id ='".$customer_id."' and inquiry_type='".$inquiry_type_value."' and form_id=".$form_id)
+					->order($order_by);	 }else{
+					$condition = $select->from($inquiries,array('inquiry.*'))					
+					->where("customer_id ='".$customer_id."' and inquiry_type='".$inquiry_type_value."'")
+					->order($order_by);
 					}	
 				}
 			}else if($customer_id>0 &&  $form_id>0 && $fromdate!='' &&  $todate!='') 
@@ -699,19 +616,10 @@ class AdminController extends BaseController
 			// total connections
 				
  			$result_inquiry_1= $inquiries->fetchAll($condition_1);	
- 			$this->view->total_connections = count($result_inquiry_1);
+ 			$this->view->total_connections =count($result_inquiry_1);
  			
- 			/* Changed by Pushpendra to add minutes in admin site START*/
- 			$call_duration = 0;
- 			foreach($result_inquiry_1 as $res)
- 			{
-					$call_duration += $res->call_duration;
- 			}
- 			$min = $call_duration/60;
-			$min = ceil ( $min );
- 			$this->view->total_minutes = $min;
+ 			
 			
- 			/* Changed by Pushpendra to add minutes in admin site END*/
 			//*MONTHLY CALLS *//
 			 $month_start_date=strtotime(date('Y').'-'.date('m').'-1');
 			
