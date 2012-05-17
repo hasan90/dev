@@ -1,0 +1,95 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<form id="formID1" class="formular" method="post" action="#">
+ 	<div class="row-1 wrapper">
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+           <div class="maxheight box">
+                        <div class="padding">    
+                        
+                        <?php /* if($this->admin_left_tab == 'admin_left_tab_for_customer'){ */ ?> 
+                        <?php //echo $this->render('admin_logged_in_left_panel.phtml'); 
+                       // } else {*/?>
+                            <?php echo $this->render('logged_in_left_panel.phtml'); //} ?>
+                            
+                        </div>
+                    </div>
+            </article>     
+           
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:706px;"<? }?> >
+                <div class="maxheight box">
+                    <div class="padding">
+
+                        
+                    <span style="float:right;margin-right:-15px;"><a class="buttonsNextEdit" href="<?php echo WEBSITE_URL?>admin/customers">Back to Customer List</a></span>
+                     
+<h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Overview " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Overview </cufontext></cufon></h2>
+                     
+
+                      <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+							if(isset($obj->loginError)){?>
+									<span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['loginError'];					unset($_SESSION['Zend_Auth']['loginError']);?><br><br> </span>								<? }?>                  
+                        <div id="formcompanyDetails" <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?> style="width:548px;float: left;"<? }else{?> style="width:706px;" <? }?>>
+                            <fieldset style="border:0 none;padding-top:22px;">
+                            
+                            
+		                         <?php if($this->firstname!=''){ ?>   <p class="black12" style="margin-bottom: 4px;color:#666666;""><strong><?php echo htmlspecialchars(stripslashes(ucfirst($this->firstname)));?><?php if($this->lastname!=''){ echo " ".htmlspecialchars(stripslashes(ucfirst($this->lastname))); }?></strong>
+		                         <span class="buttonsNext180"><a class="buttonsNextEdit1" href="<?php echo WEBSITE_URL?>customers/editaccountdetails/id/<?php echo $this->id?>">Edit Account Details</a></span>
+		                         </p> <?php }?>
+								 <?php if($this->companyname!=''){ ?>  <p class="black12" style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->companyname)));?></p><?php }?>
+								 <?php if($this->email!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes($this->email));?>
+								 
+								 </p><?php }?>
+								 <?php if($this->address1!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->address1)));?></p><?php }?>
+								 <?php if($this->address2!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->address2)));?></p>   <?php }?>
+								 <?php if($this->city!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->city))).", ";?> <?php }?>
+								 <?php if($this->state!=''){ ?>  <?php echo htmlspecialchars(stripslashes(ucfirst($this->state)))." ";?><?php }?>
+								 <?php if($this->zip!=''){ ?>   <?php echo htmlspecialchars(stripslashes($this->zip));?></p><?php }?>
+								 <?php if($this->phone!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes($this->phone));?></p> <?php }?>  <br>
+                                <?php if($this->card_type!=''){ ?><p class="black12"  style="margin-bottom: 4px;color:#666666;""><strong><?php echo htmlspecialchars(stripslashes($this->card_type));?></strong>
+                                <span class="buttonsNext106"><a class="buttonsNextEdit2" href="<?php echo WEBSITE_URL?>customers/editpaymentdetails/id/<?php echo $this->id?>">Edit Payment Details</a></span>
+                                </p>                              	
+                              <?php }?>
+                                
+                                <?php if($this->card_num!=''){ 
+                                	if($this->card_type!='American Express'){
+                                	?>                               
+                          		  <p class="black12" style="margin-bottom: 4px;">XXXX XXXX XXXX <?php echo substr(htmlspecialchars(stripslashes($this->card_num)),-4);?></p> 
+                                <?php }else {
+                                ?>
+                                 <p class="black12" style="margin-bottom: 4px;">XXXX XXXXXX X<?php echo substr(htmlspecialchars(stripslashes($this->card_num)),-4);?></p> 
+                                
+                                <?php }
+                                 }?>                        
+                                
+                               <?php if($this->expiry_month!=''){ ?>
+                                 
+                          		<p class="black12" style="margin-bottom: 4px;color:#666666;"">Exp: <?php echo htmlspecialchars(stripslashes($this->expiry_month));?> /
+                          		<?php if($this->expiry_year!=''){ ?><?php echo htmlspecialchars(stripslashes($this->expiry_year));?><?php }?>
+                          		</p>
+                                               
+                                <?php }?>
+                                
+                                <?php if($this->card_name!=''){ ?>                              
+                          		 <p class="black12" style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(ucfirst(stripslashes($this->card_name)));?></p>                                
+                                <?php }?>
+                                <?php if($this->card_cvv!=''){ ?>                               
+                          		 <p class="black12" style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes($this->card_cvv));?></p>                                
+                                <?php }?>
+                                <br>
+                                <?php if($this->plan_id!=''){ ?>
+                                <p class="black12"  style="margin-bottom: 4px;color:#666666;""><strong>Plan: </strong>
+                                <span class="buttonsNext152"><a class="buttonsNextEdit3" href="<?php echo WEBSITE_URL?>customers/editplandetails/id/<?php echo $this->id?>">Edit Plan Details</a></span>
+                                </p>  
+                               <p class="black12" style="margin-bottom: 4px;color:#666666;">
+                              <?php echo htmlspecialchars(stripslashes($this->plan_id));?> $<?php echo htmlspecialchars(stripslashes($this->plan_price));?><br> Billing Cycle: <?php echo $this->start_date?>-<?php echo $this->end_date?> </p> 
+                                 <?php }?>                                 
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </article>      
+			  </div>            
+        </form>  

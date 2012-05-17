@@ -1,0 +1,54 @@
+/*======= index.html =======*/
+#page1 #content .col-1 {width:307px; margin-right:5px;}
+#page1 #content .col-2 {width:307px; margin-right:5px;}
+#page1 #content .col-3 {width:307px;}
+
+/*======= index-1.html =======*/
+#page2 #content .row-1 .col-1 {width:307px; margin-right:5px;}
+#page2 #content .row-1 .col-2 {width:619px;}
+
+
+/*======= index-2.html =======*/
+#page3 #content .row-1 .col-1 {width:307px; margin-right:5px;}
+#page3 #content .row-1 .col-2 {width:307px; margin-right:5px;}
+#page3 #content .row-1 .col-3 {width:307px;}
+
+
+
+#page3 #content .row-2 .col-1 {width:619px; margin-right:5px;}
+#page3 #content .row-2 .col-2 {width:307px;}
+
+/*======= index-3.html =======*/
+#page4 #content .row-1 .col-1 {width:619px; margin-right:5px;}
+#page4 #content .row-1 .col-2 {width:307px;}
+
+#page4 #content .row-2 .col-1 {width:307px; margin-right:5px;}
+#page4 #content .row-2 .col-2 {width:619px;}
+
+/*======= index-4.html =======*/
+#page5 #content .row-1 .col-1 {width:619px; margin-right:5px;}
+#page5 #content .row-1 .col-2 {width:307px;}
+
+#page5 #content .row-2 .col-1 {width:619px; margin-right:5px;}
+#page5 #content .row-2 .col-2 {width:307px;}
+
+/*======= index-5.html =======*/
+#page6 #content .row-1 .col-1 {width:307px; margin-right:5px;}
+#page6 #content .row-1 .col-2 {width:619px;}
+#page6 #content .row-1 .col-3 {width:457px; margin-right:5px;}
+#page6 #content .row-1 .col-5 {width:220px; margin-right:5px;}
+#page6 #content .row-1 .col-4 {width:469px;}
+#page6 #content .row-1 .col-6 {width:706px; margin-right:5px;}
+
+#page6 #content .row-1 .col-2 .col-1 {width:165px; margin-right:30px;}
+#page6 #content .row-1 .col-2 .col-2 {width:165px; margin-right:30px;}
+#page6 #content .row-1 .col-2 .col-3 {width:165px;}
+
+#page6 #content .row-2 .col-1 {width:307px; margin-right:5px;}
+#page6 #content .row-2 .col-2 {width:307px; margin-right:5px;}
+#page6 #content .row-2 .col-3 {width:307px;}
+
+
+#page6 #footerContent .row-2 .col-1 {width:307px; margin-right:5px;}
+#page6 #footerContent .row-2 .col-2 {width:307px; margin-right:5px;}
+#page6 #footerContent .row-2 .col-3 {width:307px;}
